@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import sqlite3
 
-#data = pd.read_csv(r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\data\output\cadastro_produtores.csv')
 db_file = r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\db\cadastro_produtores.db'
 
 def get_db_connection(db_file):
@@ -20,15 +19,10 @@ def run_query(query, conn):
 conn = get_db_connection(db_file)
 
 query = 'SELECT * FROM cad_prod_org'
-
 data = run_query(query, conn)
 
 conn.close()
 
-print(data.columns)
-print(data.head())
-
-#%%
 # visão geral 
 distribuicao_tipo_entidade = data['tipo_de_entidade'].value_counts()
 fig_tipo_entidade = px.bar(distribuicao_tipo_entidade, 
