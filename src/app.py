@@ -2,8 +2,15 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import os
 
-data = pd.read_csv('C:/Users/luizz/Desktop/dashboard-organicos/dashboard/data/output/cadastro_produtores.csv')
+current_dir = os.path.dirname(__file__)
+file_path = os.path.join(current_dir, 'data', 'output', 'cadastro_produtores.csv')
+
+if os.path.exists(file_path):
+    data = pd.read_csv(file_path)
+
+#data = pd.read_csv('C:/Users/luizz/Desktop/dashboard-organicos/dashboard/data/output/cadastro_produtores.csv')
 
 # visão geral 
 distribuicao_tipo_entidade = data['tipo_de_entidade'].value_counts()
