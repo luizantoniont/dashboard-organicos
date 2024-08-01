@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-PATH = r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\data\input\cadastro_produtores.xlsx'
+PATH = r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\streamlit\data\input\cadastro_produtores.xlsx'
 
 def load_data(PATH):
 
@@ -21,7 +21,7 @@ def format_column_name():
 def save_data_csv(data_excel):
 
     try:
-        data_excel.to_csv(r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\data\output\cadastro_produtores.csv', index=False)
+        data_excel.to_csv(r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\streamlit\data\output\cadastro_produtores.csv', index=False)
         print('Arquivo salvo com sucesso')
 
     except Exception as e:

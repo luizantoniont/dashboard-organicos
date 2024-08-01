@@ -4,7 +4,7 @@ import sqlite3
 database = 'cadastro_produtores.db'
 table_name = 'cad_prod_org'
 
-data = pd.read_csv(r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\data\output\cadastro_produtores.csv')
+data = pd.read_csv(r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\streamlit\data\output\cadastro_produtores.csv')
 
 def create_database_from_dataframe(data, database, table_name):
     
