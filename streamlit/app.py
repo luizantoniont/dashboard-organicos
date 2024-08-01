@@ -5,22 +5,7 @@ import numpy as np
 import plotly.express as px
 import sqlite3
 
-db_file = r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\db\cadastro_produtores.db'
-
-def get_db_connection(db_file):
-    conn = sqlite3.connect(db_file)
-    return conn
-
-def run_query(query, conn):
-    df = pd.read_sql_query(query, conn)
-    return df
-
-conn = get_db_connection(db_file)
-
-query = 'SELECT * FROM cad_prod_org'
-data = run_query(query, conn)
-
-conn.close()
+data = pd.read_csv(r'C:\Users\luizz\Desktop\dashboard-organicos\dashboard\data\output\cadastro_produtores.csv')
 
 # visão geral 
 distribuicao_tipo_entidade = data['tipo_de_entidade'].value_counts()
