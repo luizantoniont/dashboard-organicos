@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-data = pd.read_csv('C:/Users/luizz/Desktop/dashboard-organicos/dashboard/data/output/cadastro_produtores.csv')
+data = pd.read_csv('cadastro_produtores.csv')
 
 # visão geral 
 distribuicao_tipo_entidade = data['tipo_de_entidade'].value_counts()
