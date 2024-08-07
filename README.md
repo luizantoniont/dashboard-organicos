@@ -6,5 +6,5 @@ O objetivo é disponibilizar as informações e os principais dados com uma inte
 
 
 
-![Image Error](dashboard/image.jpg)
+![Image Error](image.jpg)
 
