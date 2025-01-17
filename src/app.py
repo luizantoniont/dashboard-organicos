@@ -18,7 +18,7 @@ def load_data_csv(file_path):
 # Início da aplicação Streamlit
 if __name__ == '__main__':
     # Parametrizar o caminho do arquivo CSV
-    csv_file_path = 'cadastro_produtores.csv'
+    csv_file_path = 'dashboard-organicos/src/cadastro_produtores.csv'
 
     # Carregar os dados
     data = load_data_csv(csv_file_path)

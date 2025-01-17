@@ -1,7 +1,7 @@
 import pandas as pd
 
-INPUT_PATH = 'dashboard/data/input/cadastro_produtores.xlsx'
-OUTPUT_PATH = 'dashboard\src\cadastro_produtores.csv'
+INPUT_PATH = 'dashboard-organicos/data/input/cadastro_produtores.xlsx'
+OUTPUT_PATH = 'dashboard-organicos/src/cadastro_produtores.csv'
 
 def load_data(file_path):
     """Loads data form an Excel file.

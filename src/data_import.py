@@ -1,9 +1,9 @@
 import pandas as pd
 
 URL_ROOT = (
-'https://www.gov.br/agricultura/pt-br/assuntos/sustentabilidade/organicos/CNPO_MAPA_03_07_2024_IMASCARA.xlsx'
+'https://www.gov.br/agricultura/pt-br/assuntos/sustentabilidade/organicos/CNPO_MAPA_14_01_2025_Imascara.xlsx'
 )
-OUTPUT_DIR = 'dashboard/data/input/cadastro_produtores.xlsx'
+OUTPUT_DIR = 'dashboard-organicos/data/input/cadastro_produtores.xlsx'
 
 def import_data(URL_ROOT):
     """
@@ -45,6 +45,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
