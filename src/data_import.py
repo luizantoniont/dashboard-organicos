@@ -1,9 +1,10 @@
 import pandas as pd
+import os
 
 URL_ROOT = (
 'https://www.gov.br/agricultura/pt-br/assuntos/sustentabilidade/organicos/CNPO_MAPA_14_01_2025_Imascara.xlsx'
 )
-OUTPUT_DIR = 'dashboard-organicos/data/input/cadastro_produtores.xlsx'
+OUTPUT_DIR = 'data/input/'
 
 def import_data(URL_ROOT):
     """
@@ -31,6 +32,7 @@ def save_data(data, file_path):
     """
 
     try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
         data.to_excel(file_path, index=False)
         print('Dados salvos com sucesso')
         return data

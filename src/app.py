@@ -1,16 +1,23 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+import os
 
 def load_data_csv(file_path):
     """
     Loads data from a CSV file.
     
-    :param: Path to the CSV file.
-    :return: DataFrame with the data or None if an errors occurs.
+    :param file_path: Path to the CSV file.
+    :return: DataFrame with the data or None if an error occurs.
     """
     try:
         return pd.read_csv(file_path)
+    except FileNotFoundError:
+        st.error(f"Erro: Arquivo não encontrado no caminho especificado: {file_path}")
+        return None
+    except pd.errors.EmptyDataError:
+        st.error("Erro: O arquivo está vazio.")
+        return None
     except Exception as e:
         st.error(f"Erro ao carregar o arquivo: {e}")
         return None
@@ -18,7 +25,12 @@ def load_data_csv(file_path):
 # Início da aplicação Streamlit
 if __name__ == '__main__':
     # Parametrizar o caminho do arquivo CSV
-    csv_file_path = 'dashboard-organicos/src/cadastro_produtores.csv'
+    csv_file_path = os.path.join('data', 'output', 'cadastro_produtores.csv')
+
+    # Verificar se o arquivo existe
+    if not os.path.exists(csv_file_path):
+        st.error(f"Erro: O arquivo não foi encontrado no caminho especificado: {csv_file_path}")
+        st.stop()
 
     # Carregar os dados
     data = load_data_csv(csv_file_path)

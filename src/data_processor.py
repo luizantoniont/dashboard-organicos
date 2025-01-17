@@ -1,23 +1,29 @@
 import pandas as pd
+import os
 
-INPUT_PATH = 'dashboard-organicos/data/input/cadastro_produtores.xlsx'
-OUTPUT_PATH = 'dashboard-organicos/src/cadastro_produtores.csv'
+INPUT_PATH = 'data/input/cadastro_produtores.xlsx'
+OUTPUT_PATH = 'data/output/cadastro_produtores.csv'
 
 def load_data(file_path):
-    """Loads data form an Excel file.
+    """
+    Loads data from an Excel file.
     
     :param file_path: Path to the Excel file.
-    :return: DataFrame with the data or None if an error
+    :return: DataFrame with the data or None if an error occurs.
     """
     try:
         data = pd.read_excel(file_path, header=2)
         print('Dados carregados com sucesso')
         return data
+    except FileNotFoundError as e:
+        print(f'Erro: Arquivo não encontrado no caminho especificado: {e}')
+        return None
     except pd.errors.ParserError as e:
-        print(f'Dados carregados com sucesso {e}')
+        print(f'Erro ao analisar o arquivo: {e}')
         return None
     except Exception as e:
-        print(f'Erro ao carregar o arquivo {e}')
+        print(f'Erro ao carregar o arquivo: {e}')
+        return None
         
 def format_column_names(data):
     """
@@ -39,10 +45,12 @@ def save_data_to_csv(data, file_path):
     :return: None 
     """
     try:
-        data.to_csv('file_path', index=False)
+        # Criar o diretório de saída, se não existir
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        data.to_csv(file_path, index=False)
         print('Arquivo salvo com sucesso')
     except Exception as e:
-        print('Erro ao salvar o arquivo')
+        print(f'Erro ao salvar o arquivo: {e}')
         
 if __name__ == '__main__':
     data_excel = load_data(INPUT_PATH)
