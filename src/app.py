@@ -24,8 +24,11 @@ def load_data_csv(file_path):
 
 # Início da aplicação Streamlit
 if __name__ == '__main__':
-    # Parametrizar o caminho do arquivo CSV
-    csv_file_path = os.path.join('data', 'output', 'cadastro_produtores.csv')
+    # Ajustar o caminho do arquivo CSV para ser relativo à raiz do projeto
+    # quando app.py está dentro da pasta src.
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_file_path = os.path.join(root_dir, '..', 'data', 'output', 'cadastro_produtores.csv')
+    csv_file_path = os.path.normpath(csv_file_path)  # Normaliza o caminho para evitar problemas com barras duplas ou barras invertidas.
 
     # Verificar se o arquivo existe
     if not os.path.exists(csv_file_path):
@@ -36,6 +39,7 @@ if __name__ == '__main__':
     data = load_data_csv(csv_file_path)
     if data is None:
         st.stop()
+
 
 # Criar visualizações
 distribuicao_tipo_entidade = data['tipo_de_entidade'].value_counts()

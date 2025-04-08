@@ -4,7 +4,7 @@ import os
 URL_ROOT = (
 'https://www.gov.br/agricultura/pt-br/assuntos/sustentabilidade/organicos/CNPO_MAPA_14_01_2025_Imascara.xlsx'
 )
-OUTPUT_DIR = 'data/input/'
+OUTPUT_DIR = 'data/output/'
 
 def import_data(URL_ROOT):
     """
