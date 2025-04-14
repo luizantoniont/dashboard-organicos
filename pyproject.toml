@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "dashboard"
+name = "dashboard-organicos"
 version = "0.1.0"
 description = ""
 authors = ["luizantoniont <luizzantonioneto@gmail.com>"]
