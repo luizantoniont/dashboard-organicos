@@ -1,9 +1,6 @@
 import pandas as pd
 import os
 
-INPUT_PATH = 'data/input/cadastro_produtores.xlsx'
-OUTPUT_PATH = 'data/output/cadastro_produtores.csv'
-
 def load_data(file_path):
     """
     Loads data from an Excel file.
@@ -13,16 +10,16 @@ def load_data(file_path):
     """
     try:
         data = pd.read_excel(file_path, header=2)
-        print('Dados carregados com sucesso')
+        print(f'Dados carregados com sucesso de: , {file_path}')
         return data
     except FileNotFoundError as e:
         print(f'Erro: Arquivo não encontrado no caminho especificado: {e}')
         return None
     except pd.errors.ParserError as e:
-        print(f'Erro ao analisar o arquivo: {e}')
+        print(f'Erro ao analisar o arquivo: {file_path}: {e}')
         return None
     except Exception as e:
-        print(f'Erro ao carregar o arquivo: {e}')
+        print(f'Erro ao carregar o arquivo: {file_path}')
         return None
         
 def format_column_names(data):
@@ -45,18 +42,41 @@ def save_data_to_csv(data, file_path):
     :return: None 
     """
     try:
-        # Criar o diretório de saída, se não existir
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        data.to_csv(file_path, index=False)
-        print('Arquivo salvo com sucesso')
+        # Garante que o diretório de destino exista
+        output_dir = os.path.dirname(file_path)
+        os.makedirs(output_dir, exist_ok=True)
+
+        data.to_csv(file_path, index=False, encoding='utf-8') # Adicionado encoding
+        print(f'Arquivo salvo com sucesso em: {file_path}')
     except Exception as e:
-        print(f'Erro ao salvar o arquivo: {e}')
+        print(f'Erro ao salvar o arquivo CSV em {file_path}: {e}')
         
 if __name__ == '__main__':
-    data_excel = load_data(INPUT_PATH)
+    # --- Construção dinâmica dos caminhos ---
+    # Obtém o diretório onde o script atual (data_processor.py) está localizado
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Constrói o caminho para a pasta 'data' subindo um nível ('..')
+    data_base_dir = os.path.join(script_dir, '..', 'data')
+
+    # Constrói os caminhos completos para os arquivos de entrada e saída
+    input_file_path = os.path.join(data_base_dir, 'raw', 'cadastro_produtores.xlsx')
+    output_file_path = os.path.join(data_base_dir, 'processed', 'cadastro_produtores.csv')
+
+    # Normaliza os caminhos (remove '..' e ajusta separadores)
+    input_file_path = os.path.normpath(input_file_path)
+    output_file_path = os.path.normpath(output_file_path)
+    # --- Fim da construção dinâmica dos caminhos ---
+
+    print(f"Processando arquivo de: {input_file_path}")
+    data_excel = load_data(input_file_path)
+
     if data_excel is not None:
-        data_excel = format_column_names(data_excel)
-        save_data_to_csv(data_excel, OUTPUT_PATH)
+        data_formatted = format_column_names(data_excel)
+        print(f"Salvando arquivo processado em: {output_file_path}")
+        save_data_to_csv(data_formatted, output_file_path)
+    else:
+        print("Processamento cancelado devido a erro no carregamento dos dados.")
 
 
 

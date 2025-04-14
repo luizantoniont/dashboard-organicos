@@ -3,6 +3,8 @@ import plotly.express as px
 import streamlit as st
 import os
 
+st.set_page_config(layout="wide")
+@st.cache_data
 def load_data_csv(file_path):
     """
     Loads data from a CSV file.
@@ -27,7 +29,7 @@ if __name__ == '__main__':
     # Ajustar o caminho do arquivo CSV para ser relativo à raiz do projeto
     # quando app.py está dentro da pasta src.
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    csv_file_path = os.path.join(root_dir, '..', 'data', 'output', 'cadastro_produtores.csv')
+    csv_file_path = os.path.join(root_dir, '..', 'data', 'processed', 'cadastro_produtores.csv')
     csv_file_path = os.path.normpath(csv_file_path)  # Normaliza o caminho para evitar problemas com barras duplas ou barras invertidas.
 
     # Verificar se o arquivo existe
@@ -91,8 +93,10 @@ fig_produtores_por_uf.update_layout(legend_title_text='Tipo de Entidade',
 
 # Exibir visualizações no Streamlit
 st.title('Cadastro de Produtores Orgânicos')
-st.plotly_chart(fig_uf)
-st.plotly_chart(fig_produtores_por_uf)
-st.plotly_chart(fig_entidade)
-st.plotly_chart(fig_tipo_entidade)
-
+col1, col2 = st.columns(2)
+with col1:
+    st.plotly_chart(fig_uf, use_container_width=True)
+    st.plotly_chart(fig_entidade, use_container_width=True)
+with col2:
+    st.plotly_chart(fig_produtores_por_uf, use_container_width=True)
+    st.plotly_chart(fig_tipo_entidade, use_container_width=True)
