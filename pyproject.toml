@@ -19,4 +19,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.packages]
-include = "src"
+include = [
+    { include = "src" }
+]
