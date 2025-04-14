@@ -6,6 +6,7 @@ Este projeto tem como objetivo a construção de uma interface interativa para v
 
 Sobre o CNPO
 
+
 O CNPO reúne dados sobre:
 
 - Produtores orgânicos de todo o Brasil
@@ -13,6 +14,7 @@ O CNPO reúne dados sobre:
 - Organismos de Avaliação da Conformidade Orgânica (OACs)
 
 - Organizações de Controle Social (OCS), que comercializam diretamente com o consumidor final
+
 
 **Objetivo do Projeto**
 
@@ -24,15 +26,17 @@ Permitir buscas e filtros personalizados
 
 Exibir gráficos e tabelas com informações relevantes
 
+
 **Tecnologias Utilizadas**
 
 Python 3.11
 
-Streamlit — para construção da interface
+1. Streamlit — para construção da interface
 
-Pandas — para tratamento dos dados
+2. Pandas — para tratamento dos dados
 
-Plotly e Matplotlib — para visualizações gráficas
+3. Plotly e Matplotlib — para visualizações gráficas
+
 
 **Status**
 
