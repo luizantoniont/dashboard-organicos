@@ -42,61 +42,82 @@ if __name__ == '__main__':
     if data is None:
         st.stop()
 
+# Cria barras laterais e adiciona filtros
+st.sidebar.header('Filtros')
 
-# Criar visualizações
-distribuicao_tipo_entidade = data['tipo_de_entidade'].value_counts()
-fig_tipo_entidade = px.bar(distribuicao_tipo_entidade, 
-                           title='Distribuição por Tipo de Entidade',
-                           template="simple_white",
-                           labels={'tipo_de_entidade': 'Tipo de Entidade', 
-                                   'value': 'Número de Produtores'})
-fig_tipo_entidade.update_layout(showlegend=False)
+# Cria filtro por Tipo de Entidade
+tipos_entidade = sorted(data['tipo_de_entidade'].unique())
+tipo_entidade_selecionado = st.sidebar.multiselect('Tipo de Entidade:', 
+                                                    tipos_entidade, 
+                                                    default=tipos_entidade)
+data_filtrada_tipo = data[data['tipo_de_entidade'].isin(tipo_entidade_selecionado)]
 
-distribuicao_entidade = data['entidade'].value_counts().head()
-fig_entidade = px.bar(distribuicao_entidade, 
-                      orientation='h', 
-                      title='Distribuição por Entidade',
-                      template="simple_white",
-                      labels={'entidade': 'Entidade', 'value': 
-                              'Número de cadastros'})
-fig_entidade.update_layout(showlegend=False)
+# Cria filtro Entidade
+entidades = sorted(data_filtrada_tipo['entidade'].unique())
+entidade_selecionada = st.sidebar.multiselect('Entidade:',
+                                                entidades, 
+                                                default=entidades)
+data_filtrada_entidade = data_filtrada_tipo[data_filtrada_tipo['entidade'].isin(entidade_selecionada)]
 
-distribuicao_uf = (
-    data['uf'].value_counts().reset_index(name='Número de Produtores')
-)
-fig_uf = px.bar(distribuicao_uf, 
-                x='uf', 
-                y='Número de Produtores',
-                title='Distribuição por UF',
-                template="simple_white",
-                labels={'uf': 'UF', 'value': 'Número de cadastros'})
-fig_uf.update_layout(showlegend=False)
+# Cria filtro UF
+ufs = sorted(data_filtrada_entidade['uf'].unique())
+uf_selecionada = st.sidebar.multiselect('UF:', ufs, default=ufs)
+data_filtrada_uf = data_filtrada_entidade[data_filtrada_entidade['uf'].isin(uf_selecionada)]    
 
-produtores_por_uf = (
-    data.groupby(['uf', 'tipo_de_entidade'])
-       .size()
-       .reset_index(name='Número de Produtores')
-)
-produtores_por_uf = produtores_por_uf.sort_values(by='Número de Produtores', 
-                                                  ascending=False)
-fig_produtores_por_uf = px.bar(
-    produtores_por_uf, 
-    x='uf', 
-    y='Número de Produtores', 
-    color='tipo_de_entidade', 
-    title='Número de Produtores Orgânicos por UF e Tipo de Entidade',
-    template="simple_white",
-    labels={'uf': 'UF'}
-)
-fig_produtores_por_uf.update_layout(legend_title_text='Tipo de Entidade',
-                                    xaxis_tickangle=-90)
 
-# Exibir visualizações no Streamlit
 st.title('Cadastro de Produtores Orgânicos')
 col1, col2 = st.columns(2)
 with col1:
-    st.plotly_chart(fig_uf, use_container_width=True)
+# Criar visualizações
+    distribuicao_tipo_entidade = data['tipo_de_entidade'].value_counts()
+    fig_tipo_entidade = px.bar(distribuicao_tipo_entidade, 
+                            title='Distribuição por Tipo de Entidade',
+                            template="simple_white",
+                            labels={'tipo_de_entidade': 'Tipo de Entidade', 
+                                    'value': 'Número de Produtores'})
+    fig_tipo_entidade.update_layout(showlegend=False)
+    st.plotly_chart(fig_tipo_entidade, use_container_width=True)
+
+    distribuicao_entidade = data['entidade'].value_counts().head()
+    fig_entidade = px.bar(distribuicao_entidade, 
+                        orientation='h', 
+                        title='Distribuição por Entidade',
+                        template="simple_white",
+                        labels={'entidade': 'Entidade', 'value': 
+                                'Número de cadastros'})
+    fig_entidade.update_layout(showlegend=False)
     st.plotly_chart(fig_entidade, use_container_width=True)
 with col2:
+    distribuicao_uf = (
+        data['uf'].value_counts().reset_index(name='Número de Produtores')
+    )
+    fig_uf = px.bar(distribuicao_uf, 
+                    x='uf', 
+                    y='Número de Produtores',
+                    title='Distribuição por UF',
+                    template="simple_white",
+                    labels={'uf': 'UF', 'value': 'Número de cadastros'})
+    fig_uf.update_layout(showlegend=False)
+    st.plotly_chart(fig_uf, use_container_width=True)
+
+    produtores_por_uf = (
+        data.groupby(['uf', 'tipo_de_entidade'])
+        .size()
+        .reset_index(name='Número de Produtores')
+    )
+    produtores_por_uf = produtores_por_uf.sort_values(by='Número de Produtores', 
+                                                    ascending=False)
+    fig_produtores_por_uf = px.bar(
+        produtores_por_uf, 
+        x='uf', 
+        y='Número de Produtores', 
+        color='tipo_de_entidade', 
+        title='Número de Produtores Orgânicos por UF e Tipo de Entidade',
+        template="simple_white",
+        labels={'uf': 'UF'}
+    )
+    fig_produtores_por_uf.update_layout(legend_title_text='Tipo de Entidade',
+                                        xaxis_tickangle=-90)
+    fig_produtores_por_uf.update_layout(showlegend=True)
     st.plotly_chart(fig_produtores_por_uf, use_container_width=True)
-    st.plotly_chart(fig_tipo_entidade, use_container_width=True)
+

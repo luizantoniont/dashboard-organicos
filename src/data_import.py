@@ -1,10 +1,6 @@
 import pandas as pd
 import os
-<<<<<<< HEAD
-# teste
-=======
 
->>>>>>> 08fe3d6d3f01ed3337323b9308383e8a5668851d
 URL_ROOT = (
 'https://www.gov.br/agricultura/pt-br/assuntos/sustentabilidade/organicos/CNPO_MAPA_01_04_2025MASCARADO.xlsx')
 
